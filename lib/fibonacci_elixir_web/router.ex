@@ -20,6 +20,15 @@ defmodule FibonacciElixirWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/api", FibonacciElixirWeb do
+    pipe_through :api
+
+    scope "/calculations" do
+      get("/:number", Calculations.CalculationController, :get)
+      get("/list/:number", Calculations.CalculationController, :list)
+    end
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FibonacciElixirWeb do
   #   pipe_through :api
