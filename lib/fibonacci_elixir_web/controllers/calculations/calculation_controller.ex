@@ -6,8 +6,8 @@ defmodule FibonacciElixirWeb.Calculations.CalculationController do
   action_fallback FibonacciElixirWeb.FallbackController
 
   def get(conn, %{"number" => input}) do
-    with {:ok, number} <- parse_number(input) do
-      fib = Calculations.value(number)
+    with {:ok, number} <- parse_number(input),
+         {:ok, fib} <- Calculations.fibonacci_value(number) do
       render(conn, :show, input: number, data: fib)
     else
       {:error, _message} -> {:error, :bad_request}
@@ -15,8 +15,8 @@ defmodule FibonacciElixirWeb.Calculations.CalculationController do
   end
 
   def list(conn, %{"number" => input}) do
-    with {:ok, number} <- parse_number(input) do
-      fibs = Calculations.list(number)
+    with {:ok, number} <- parse_number(input),
+         {:ok, fibs} <- Calculations.fibonacci_list(number) do
       render(conn, :index, data: fibs)
     else
       {:error, _message} -> {:error, :bad_request}
