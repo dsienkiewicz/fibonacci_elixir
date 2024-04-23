@@ -16,7 +16,8 @@ defmodule FibonacciElixir.Application do
       # Start a worker by calling: FibonacciElixir.Worker.start_link(arg)
       # {FibonacciElixir.Worker, arg},
       # Start to serve requests, typically the last entry
-      FibonacciElixirWeb.Endpoint
+      FibonacciElixirWeb.Endpoint,
+      {FibonacciElixir.Calculations.BlacklistStore, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

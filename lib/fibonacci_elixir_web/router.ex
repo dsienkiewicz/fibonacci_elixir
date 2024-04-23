@@ -27,6 +27,12 @@ defmodule FibonacciElixirWeb.Router do
       get("/:number", Calculations.CalculationController, :get)
       get("/list/:number", Calculations.CalculationController, :list)
     end
+
+    scope "/blacklist" do
+      get("/", Calculations.BlacklistController, :list)
+      post("/", Calculations.BlacklistController, :insert)
+      delete("/:number", Calculations.BlacklistController, :delete)
+    end
   end
 
   # Other scopes may use custom stacks.

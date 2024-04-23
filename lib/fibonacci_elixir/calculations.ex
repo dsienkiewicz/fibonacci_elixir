@@ -3,6 +3,7 @@ defmodule FibonacciElixir.Calculations do
   Context module for the Fibonacci calculations.
   """
 
+  alias FibonacciElixir.Calculations.BlacklistStore
   alias FibonacciElixir.Calculations.Fibonacci
 
   @type page_info :: %{page: pos_integer, size: pos_integer}
@@ -31,7 +32,10 @@ defmodule FibonacciElixir.Calculations do
   @spec fibonacci_value(number :: Fibonacci.input_number()) ::
           {:ok, Fibonacci.output_number()} | {:error, atom}
   def fibonacci_value(number) when is_positive_number(number) do
-    {:ok, Fibonacci.value(number)}
+    case BlacklistStore.exists?(number) do
+      true -> {:error, :blacklisted_number}
+      false -> {:ok, Fibonacci.value(number)}
+    end
   end
 
   def fibonacci_value(_number), do: {:error, :invalid_number}
@@ -60,6 +64,7 @@ defmodule FibonacciElixir.Calculations do
     values =
       number
       |> Fibonacci.list()
+      |> Enum.reject(&BlacklistStore.exists?(&1.input))
       |> paginate(page_info)
 
     {:ok, values}
@@ -72,6 +77,34 @@ defmodule FibonacciElixir.Calculations do
   """
   @spec default_page_info() :: page_info()
   def default_page_info, do: @default_page_info
+
+  @doc """
+  Returns the current blacklist as list.
+  """
+  @spec list_blacklisted() :: [Fibonacci.input_number()]
+  def list_blacklisted() do
+    BlacklistStore.get()
+  end
+
+  @doc """
+  Inserts an input number into the blacklist store.
+  """
+  @spec insert_blacklisted(number :: Fibonacci.input_number()) :: :ok | {:error, atom}
+  def insert_blacklisted(number) when is_positive_number(number) do
+    BlacklistStore.put(number)
+  end
+
+  def insert_blacklisted(_number), do: {:error, :invalid_number}
+
+  @doc """
+  Deletes an input number from the blacklist store.
+  """
+  @spec delete_blacklisted(number :: Fibonacci.input_number()) :: :ok | {:error, atom}
+  def delete_blacklisted(number) when is_positive_number(number) do
+    BlacklistStore.delete(number)
+  end
+
+  def delete_blacklisted(_number), do: {:error, :invalid_number}
 
   defp paginate(values, page_info) do
     %{page: page, size: size} = page_info
