@@ -7,17 +7,22 @@ defmodule FibonacciElixir.Calculations.Fibonacci do
   @type output_number :: pos_integer
 
   def value(number) do
-    number + 1
+    Enum.at(sequence(), number)
   end
 
   def list(number) do
-    [
-      %{input: 1, data: 1},
-      %{input: 2, data: 1},
-      %{input: 3, data: 2},
-      %{input: 4, data: 3},
-      %{input: 5, data: 5},
-      %{input: 6, data: 8}
-    ]
+    # The sequence is 0-based, so we need to drop the first element
+    # as we accept inputs starting from one.
+
+    sequence()
+    |> Stream.zip(0..number)
+    |> Stream.drop(1)
+    |> Enum.map(fn {data, input} -> %{input: input, data: data} end)
+  end
+
+  defp sequence() do
+    Stream.unfold({0, 1}, fn {current, next} ->
+      {current, {next, current + next}}
+    end)
   end
 end

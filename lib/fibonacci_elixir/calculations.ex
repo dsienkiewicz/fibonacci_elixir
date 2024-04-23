@@ -13,7 +13,7 @@ defmodule FibonacciElixir.Calculations do
   @doc """
   Returns the value of the Fibonacci sequence for a given number.
 
-  ## Example:
+  ## Examples
 
     iex> FibonacciElixir.Calculations.fibonacci_value(1)
     {:ok, 1}
@@ -35,17 +35,17 @@ defmodule FibonacciElixir.Calculations do
   @doc """
   Returns a list of the Fibonacci sequence from 1 up to a given number.
 
-  ## Example:
+  ## Examples
 
-  iex> FibonacciElixir.Calculations.fibonacci_list(1)
-  {:ok, [%{input: 1, data: 1}]}
+    iex> FibonacciElixir.Calculations.fibonacci_list(1)
+    {:ok, [%{input: 1, data: 1}]}
 
-  iex> FibonacciElixir.Calculations.fibonacci_list(6)
-  {:ok, [%{input: 1, data: 1}, %{input: 2, data: 1}, %{input: 3, data: 2},
-         %{input: 4, data: 3}, %{input: 5, data: 5}, %{input: 6, data: 8}]}
+    iex> FibonacciElixir.Calculations.fibonacci_list(6)
+    {:ok, [%{input: 1, data: 1}, %{input: 2, data: 1}, %{input: 3, data: 2},
+          %{input: 4, data: 3}, %{input: 5, data: 5}, %{input: 6, data: 8}]}
 
-  iex> FibonacciElixir.Calculations.fibonacci_value(-1)
-  {:error, :invalid_number}
+    iex> FibonacciElixir.Calculations.fibonacci_value(-1)
+    {:error, :invalid_number}
   """
   @spec fibonacci_list(number :: Fibonacci.input_number()) ::
           {:ok, [%{input: Fibonacci.input_number(), data: Fibonacci.output_number()}]}
