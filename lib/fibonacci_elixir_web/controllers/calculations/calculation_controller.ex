@@ -42,6 +42,4 @@ defmodule FibonacciElixirWeb.Calculations.CalculationController do
       _ -> {:ok, Calculations.default_page_info()}
     end
   end
-
-  defp parse_page_info(_), do: {:ok, Calculations.default_page_info()}
 end
