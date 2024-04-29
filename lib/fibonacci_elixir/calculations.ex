@@ -5,10 +5,9 @@ defmodule FibonacciElixir.Calculations do
 
   alias FibonacciElixir.Calculations.BlacklistStore
   alias FibonacciElixir.Calculations.Fibonacci
+  alias FibonacciElixir.PageInfo
 
-  @type page_info :: %{page: pos_integer, size: pos_integer}
-
-  @default_page_info %{page: 1, size: 100}
+  @default_page_info %PageInfo{page: 1, size: 100}
 
   @doc """
   Guards whether a number is a positive integer.
@@ -55,7 +54,7 @@ defmodule FibonacciElixir.Calculations do
     iex> FibonacciElixir.Calculations.fibonacci_value(-1)
     {:error, :invalid_number}
   """
-  @spec fibonacci_list(number :: Fibonacci.input_number(), page_info :: page_info()) ::
+  @spec fibonacci_list(number :: Fibonacci.input_number(), page_info :: PageInfo.t()) ::
           {:ok, [%{input: Fibonacci.input_number(), data: Fibonacci.output_number()}]}
           | {:error, atom}
   def fibonacci_list(number, page_info \\ @default_page_info)
@@ -75,7 +74,7 @@ defmodule FibonacciElixir.Calculations do
   @doc """
   Returns the default page information for the pagination.
   """
-  @spec default_page_info() :: page_info()
+  @spec default_page_info() :: PageInfo.t()
   def default_page_info, do: @default_page_info
 
   @doc """
@@ -106,11 +105,13 @@ defmodule FibonacciElixir.Calculations do
 
   def delete_blacklisted(_number), do: {:error, :invalid_number}
 
-  defp paginate(values, page_info) do
-    %{page: page, size: size} = page_info
+  defp paginate([_ | _] = values, %PageInfo{} = page_info) do
+    %PageInfo{page: page, size: size} = page_info
 
     values
     |> Enum.drop((page - 1) * size)
     |> Enum.take(size)
   end
+
+  defp paginate(values, _page_info), do: values
 end

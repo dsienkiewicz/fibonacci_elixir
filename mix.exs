@@ -9,7 +9,8 @@ defmodule FibonacciElixir.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      compilers: [:domo_compiler] ++ Mix.compilers()
     ]
   end
 
@@ -32,6 +33,7 @@ defmodule FibonacciElixir.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Default dependencies
       {:phoenix, "~> 1.7.12"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -54,7 +56,13 @@ defmodule FibonacciElixir.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.2"}
+      {:bandit, "~> 1.2"},
+
+      # Project-sepcific dependencies
+      {:domo, "~> 1.5"},
+
+      # Compile time only
+      {:typed_ecto_schema, "~> 0.4.1", runtime: false}
     ]
   end
 
