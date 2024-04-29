@@ -10,21 +10,15 @@ defmodule FibonacciElixir.Utils.TypedEmbeddedSchema do
 
   ## Usage
 
-    use FibonacciElixir.Utils.TypedEmbeddedSchema
+    defmodule FibonacciElixir.Calculations.CalculateFibonacciSequenceCommand do
+      use FibonacciElixir.Utils.TypedEmbeddedSchema
 
-    alias AgiDb.Projects.UpsertPropertyCommand
-    alias AgiDb.Workspaces.Workspace
-
-    @primary_key false
-    typed_embedded_schema do
-      field(:name, :string) :: String.t()
-      field(:workspace_id, :string) :: Workspace.id()
-      embeds_many(:properties, UpsertPropertyCommand)
+      typed_embedded_schema do
+        field(:number, :integer) :: pos_integer()
+      end
     end
 
-  ```elixir
-  > {:ok, command} = CreateProjectCommand.cast_and_validate(conn.body_params)
-  ```
+  iex> {:ok, command} = CalculateFibonacciSequenceCommand.cast_and_validate(conn.body_params)
   """
   defmacro __using__(domo_opts \\ []) do
     quote do
