@@ -34,7 +34,7 @@ defmodule FibonacciElixir.Calculations do
   def fibonacci_value(number) when is_positive_number(number) do
     case BlacklistStore.exists?(number) do
       true -> {:error, :blacklisted_number}
-      false -> {:ok, Fibonacci.value(number)}
+      false -> Fibonacci.value(number)
     end
   end
 
