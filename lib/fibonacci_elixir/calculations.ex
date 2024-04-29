@@ -14,11 +14,6 @@ defmodule FibonacciElixir.Calculations do
   @default_page_info %PageInfo{page: 1, size: 100}
 
   @doc """
-  Guards whether a number is a positive integer.
-  """
-  defguard is_positive_number(number) when is_integer(number) and number > 0
-
-  @doc """
   Returns the value of the Fibonacci sequence for a given number.
 
   ## Examples
@@ -26,7 +21,7 @@ defmodule FibonacciElixir.Calculations do
     iex> FibonacciElixir.Calculations.fibonacci_value(%FibonacciElixir.Calculations.CalculateFibonacciValueCommand{number: 1})
     {:ok, 1}
 
-    iex> FibonacciElixir.Calculations.fibonacci_value(%FibonacciElixir.Calculations.CalculateFibonacciValueCommand{number: 0})
+    iex> FibonacciElixir.Calculations.fibonacci_value(%FibonacciElixir.Calculations.CalculateFibonacciValueCommand{number: 6})
     {:ok, 8}
   """
   @spec fibonacci_value(command :: CalculateFibonacciValueCommand.t()) ::

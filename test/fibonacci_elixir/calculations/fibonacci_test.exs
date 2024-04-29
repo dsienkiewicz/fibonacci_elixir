@@ -7,28 +7,30 @@ defmodule FibonacciElixir.Calculations.FibonacciTest do
   describe "value/1" do
     test "calculates fibonacci value properly" do
       values =
-        Enum.with_index([
-          0,
-          1,
-          1,
-          2,
-          3,
-          5,
-          8,
-          13,
-          21,
-          34,
-          55,
-          89,
-          144,
-          233,
-          377,
-          610,
-          987,
-          1597,
-          2584,
-          4181
-        ])
+        Enum.with_index(
+          [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13,
+            21,
+            34,
+            55,
+            89,
+            144,
+            233,
+            377,
+            610,
+            987,
+            1597,
+            2584,
+            4181
+          ],
+          1
+        )
 
       for {expected, number} <- values do
         assert {:ok, expected} == Fibonacci.value(number)
