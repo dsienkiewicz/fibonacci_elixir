@@ -11,8 +11,6 @@ defmodule FibonacciElixir.Calculations do
   alias FibonacciElixir.Calculations.Fibonacci
   alias FibonacciElixir.PageInfo
 
-  @default_page_info %PageInfo{page: 1, size: 100}
-
   @doc """
   Returns the value of the Fibonacci sequence for a given number.
 
@@ -52,7 +50,7 @@ defmodule FibonacciElixir.Calculations do
           page_info :: PageInfo.t()
         ) ::
           {:ok, [%{input: Fibonacci.input_number(), data: Fibonacci.output_number()}]}
-  def fibonacci_list(command, page_info \\ @default_page_info)
+  def fibonacci_list(command, page_info \\ PageInfo.default())
 
   def fibonacci_list(%CalculateFibonacciSequenceCommand{} = command, %PageInfo{} = page_info) do
     %CalculateFibonacciSequenceCommand{number: number} = command
@@ -65,12 +63,6 @@ defmodule FibonacciElixir.Calculations do
 
     {:ok, values}
   end
-
-  @doc """
-  Returns the default page information for the pagination.
-  """
-  @spec default_page_info() :: PageInfo.t()
-  def default_page_info, do: @default_page_info
 
   @doc """
   Returns the current blacklist as list.

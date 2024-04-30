@@ -131,12 +131,6 @@ defmodule FibonacciElixir.CalculationsTest do
     end
   end
 
-  describe "default_page_info/0" do
-    test "returns default page info" do
-      assert %PageInfo{page: 1, size: 100} = Calculations.default_page_info()
-    end
-  end
-
   describe "blacklisting" do
     test "add number to blacklist" do
       assert {:ok, command} = CalculateFibonacciValueCommand.cast_and_validate(%{number: 1})

@@ -5,6 +5,8 @@ defmodule FibonacciElixirWeb.Calculations.BlacklistController do
   alias FibonacciElixir.Calculations.AddBlacklistedNumberCommand
   alias FibonacciElixir.Calculations.DeleteBlacklistedNumberCommand
 
+  action_fallback FibonacciElixirWeb.FallbackController
+
   def list(conn, _params) do
     blacklist = Calculations.list_blacklisted()
     render(conn, :index, data: blacklist)

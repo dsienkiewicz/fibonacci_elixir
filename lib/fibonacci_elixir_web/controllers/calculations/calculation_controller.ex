@@ -20,12 +20,22 @@ defmodule FibonacciElixirWeb.Calculations.CalculationController do
 
   def list(conn, params) do
     with {:ok, command} <- CalculateFibonacciSequenceCommand.cast_and_validate(params),
-         {:ok, page_info} <- PageInfo.cast_and_validate(params),
+         {:ok, page_info} <- parse_page_info(params),
          {:ok, fibs} <- Calculations.fibonacci_list(command, page_info) do
       render(conn, :index, data: fibs, page_info: page_info)
     else
       {:error, _message} -> {:error, :bad_request}
       error -> error
+    end
+  end
+
+  defp parse_page_info(params) do
+    cond do
+      Map.has_key?(params, "page") and Map.has_key?(params, "size") ->
+        PageInfo.cast_and_validate(params)
+
+      true ->
+        {:ok, PageInfo.default()}
     end
   end
 end
